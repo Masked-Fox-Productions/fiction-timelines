@@ -34,7 +34,7 @@ A modern web application for creating, visualizing, and sharing fictional timeli
 
 - Backend: Python with Flask
 - Frontend: HTML, CSS, JavaScript
-- Database: PostgreSQL
+- Database: SQLite (with easy migration path to AWS)
 - Authentication: Flask-Login
 - Styling: Bootstrap 5
 - Template Engine: Jinja2
@@ -43,7 +43,6 @@ A modern web application for creating, visualizing, and sharing fictional timeli
 
 ### Prerequisites
 - Python 3.8 or higher
-- PostgreSQL (v14 or higher)
 - pip
 
 ### Installation
@@ -56,7 +55,6 @@ A modern web application for creating, visualizing, and sharing fictional timeli
    ```
 3. Install dependencies: `pip install -r requirements.txt`
 4. Create a `.env` file in the root directory with the following variables:
-    - `DATABASE_URL`: Your PostgreSQL connection string
     - `SECRET_KEY`: A secret key for Flask sessions
     - `FLASK_ENV`: Set to 'development' or 'production'
 5. Initialize the database: `flask db upgrade`

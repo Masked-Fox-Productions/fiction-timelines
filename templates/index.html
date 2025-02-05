@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Fiction Timelines - Map Your Story{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-4">Map Your Fictional Universe</h1>
+        <p class="lead mb-4">Create beautiful, interactive timelines for your favorite fictional worlds. From epic sagas to intricate storylines, bring your narratives to life.</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ url_for('create_timeline') }}" class="btn btn-primary btn-lg">
+                <i class="bi bi-plus-circle"></i> Create Timeline
+            </a>
+            <a href="{{ url_for('explore') }}" class="btn btn-outline-primary btn-lg">
+                <i class="bi bi-compass"></i> Explore Timelines
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Timelines Section -->
+<section class="featured-section mb-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Featured Timelines</h2>
+        <div class="row g-4">
+            {% for timeline in featured_timelines %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ timeline.title }}</h5>
+                        <p class="card-text text-muted">{{ timeline.description[:150] }}{% if timeline.description|length > 150 %}...{% endif %}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="bi bi-person"></i> {{ timeline.author.username }}
+                            </small>
+                            <small class="text-muted">
+                                <i class="bi bi-calendar"></i> {{ timeline.created_at.strftime('%b %d, %Y') }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="{{ url_for('view_timeline', timeline_id=timeline.id) }}" class="btn btn-outline-primary btn-sm w-100">
+                            View Timeline
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12 text-center">
+                <p class="text-muted">No timelines yet. Be the first to create one!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose Fiction Timelines?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <i class="bi bi-brush display-4 text-primary mb-3"></i>
+                    <h3 class="h5">Beautiful Visualization</h3>
+                    <p class="text-muted">Create stunning, interactive timelines that bring your stories to life with our modern visualization tools.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <i class="bi bi-people display-4 text-primary mb-3"></i>
+                    <h3 class="h5">Collaborative Editing</h3>
+                    <p class="text-muted">Work together with other fans to create comprehensive timelines for your favorite universes.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="text-center">
+                    <i class="bi bi-share display-4 text-primary mb-3"></i>
+                    <h3 class="h5">Easy Sharing</h3>
+                    <p class="text-muted">Share your timelines with the community or embed them in your blog or website.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.hero-section {
+    background: linear-gradient(135deg, #6f42c1, #007bff);
+    color: white;
+    padding: 6rem 0;
+    margin-top: -1.5rem;
+    margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.4;
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.features-section .bi {
+    transition: transform 0.3s;
+}
+
+.features-section .col-md-4:hover .bi {
+    transform: scale(1.1);
+}
+</style>
+{% endblock %} 
