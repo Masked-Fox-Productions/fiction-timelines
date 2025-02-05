@@ -32,28 +32,35 @@ A modern web application for creating, visualizing, and sharing fictional timeli
 
 ## Technology Stack
 
-- Frontend: React.js with TypeScript
-- Backend: Node.js with Express
+- Backend: Python with Flask
+- Frontend: HTML, CSS, JavaScript
 - Database: PostgreSQL
-- Authentication: JWT
-- Styling: Tailwind CSS
+- Authentication: Flask-Login
+- Styling: Bootstrap 5
+- Template Engine: Jinja2
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js (v18 or higher)
+- Python 3.8 or higher
 - PostgreSQL (v14 or higher)
-- npm or yarn
+- pip
 
 ### Installation
 
 1. Clone the repository
-2. Install dependencies: `pip install -r requirements.txt`
-3. Create a `.env` file in the root directory with the following variables:
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Install dependencies: `pip install -r requirements.txt`
+4. Create a `.env` file in the root directory with the following variables:
     - `DATABASE_URL`: Your PostgreSQL connection string
-    - `JWT_SECRET`: A secret key for JWT authentication
-    - `PORT`: The port number to run the server on
-4. Start the server: `python app.py`
+    - `SECRET_KEY`: A secret key for Flask sessions
+    - `FLASK_ENV`: Set to 'development' or 'production'
+5. Initialize the database: `flask db upgrade`
+6. Start the development server: `flask run`
 
 ### Usage
 
