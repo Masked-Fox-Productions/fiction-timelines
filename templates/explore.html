@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Explore Timelines - Fiction Timelines{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-5 mb-3">Explore Timelines</h1>
+            <p class="lead">Discover timelines created by our community of storytellers.</p>
+        </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search timelines...">
+                <button class="btn btn-outline-primary" type="button">Search</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select">
+                <option selected>Sort by: Latest</option>
+                <option>Sort by: Most Popular</option>
+                <option>Sort by: Title A-Z</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Timelines Grid -->
+    <div class="row g-4">
+        {% for timeline in timelines %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ timeline.title }}</h5>
+                    <p class="card-text text-muted">{{ timeline.description[:150] }}{% if timeline.description|length > 150 %}...{% endif %}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            <i class="bi bi-person"></i> {{ timeline.author.username }}
+                        </small>
+                        <small class="text-muted">
+                            <i class="bi bi-calendar"></i> {{ timeline.created_at.strftime('%b %d, %Y') }}
+                        </small>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="badge bg-primary">{{ timeline.dating_system }}</span>
+                            <span class="badge bg-secondary">{{ timeline.events|length }} events</span>
+                        </div>
+                        <a href="{{ url_for('view_timeline', timeline_id=timeline.id) }}" class="btn btn-outline-primary btn-sm">
+                            View Timeline
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center">
+            <div class="alert alert-info">
+                <h4 class="alert-heading">No Timelines Yet</h4>
+                <p>Be the first to create a timeline and share your story!</p>
+                <hr>
+                <a href="{{ url_for('create_timeline') }}" class="btn btn-primary">Create Timeline</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if timelines %}
+    <div class="row mt-5">
+        <div class="col">
+            <nav aria-label="Timeline navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+</style>
+{% endblock %} 

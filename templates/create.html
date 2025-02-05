@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Create Timeline - Fiction Timelines{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Create New Timeline</h2>
+                    
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Timeline Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required
+                                   placeholder="e.g., The Lord of the Rings Events">
+                            <div class="form-text">Choose a descriptive title for your timeline</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" required
+                                      placeholder="Describe what this timeline covers..."></textarea>
+                            <div class="form-text">Provide context about what this timeline represents</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="dating_system" class="form-label">Dating System</label>
+                            <select class="form-select" id="dating_system" name="dating_system">
+                                <option value="CE" selected>Common Era (CE/BCE)</option>
+                                <option value="custom">Custom Dating System</option>
+                            </select>
+                            <div class="form-text">Choose how dates will be represented in your timeline</div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Create Timeline</button>
+                            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

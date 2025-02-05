@@ -146,10 +146,12 @@ def create_timeline():
         timeline = Timeline(
             title=request.form['title'],
             description=request.form['description'],
+            dating_system=request.form.get('dating_system', 'CE'),
             user_id=current_user.id
         )
         db.session.add(timeline)
         db.session.commit()
+        flash('Timeline created successfully!', 'success')
         return redirect(url_for('view_timeline', timeline_id=timeline.id))
     return render_template('create.html')
 
